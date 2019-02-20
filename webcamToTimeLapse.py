@@ -67,6 +67,8 @@ def main():
     else:
         pathlib.Path(args.d).mkdir(parents=True, exist_ok=True)
 
+    prevFile = ""
+
     while True:
         fileName = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S.jpg")
         newFile = os.path.join(args.d, fileName)
@@ -74,6 +76,11 @@ def main():
             urllib.request.urlretrieve(args.u, newFile)
         except:
             print("Error while retreiving URL. Next try in ", sec," seconds.")
+
+        if (checkIfDoubleFile(newFile, prevFile) == 0):
+            os.remove(prevFile)
+        prevFile = newFile
+
         sleep(sec)
     
     exit()
@@ -99,6 +106,15 @@ def createTimeLapseVid(srcDir, destDir, fps):
     subprocess.run(ffmpegRun, shell=True, check=True)
     print("ffmpeg finished.")
     return
+
+def checkIfDoubleFile(currentFile, prevFile):
+    if (currentFile == "" or prevFile == ""):
+        return 1
+    cfmd5 = hashlib.md5(open(currentFile, "rb").read()).hexdigest()
+    pfmd5 = hashlib.md5(open(prevFile, "rb").read()).hexdigest()
+    if (cfmd5 == pfmd5):
+        print("File ", prevFile, " with sme hash as ", currentFile," already exists and will not be saved.")
+    return 0
 
 if __name__ == "__main__":
     main()
