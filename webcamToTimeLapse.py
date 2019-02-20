@@ -3,6 +3,7 @@
 
 import argparse
 import datetime
+import os
 import pathlib
 import signal
 import subprocess
@@ -44,6 +45,10 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler_term)
     args = PARSER.parse_args()
 
+    if args.c == None and args.u == None:
+        print("No arguments provided. Please use at least '-u URL' or '-c DIR'")
+        exit()
+
     if args.c is not None:
         if args.f == None:
             createTimeLapseVid(args.c, args.d, 12)
@@ -54,10 +59,15 @@ def main():
     if args.s == None or args.s < 3 or args.s > 600:
         sec = 300
 
+    if args.d == None:
+        args.d == ""
+
+    pathlib.Path(args.d).mkdir(parents=True, exist_ok=True)
+
     while True:
         fileName = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M.jpg")
         try:
-            urllib.request.urlretrieve(args.u, fileName)
+            urllib.request.urlretrieve(args.u, os.path.join(args.d, fileName))
         except:
             print("Error while retreiving URL. Next try in ", sec," seconds.")
         sleep(sec)
