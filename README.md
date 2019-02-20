@@ -16,4 +16,4 @@
 ## TODO:
 - add png support?
 - fix, yet unknown, bugs
-- remove duplicate images (some kind of crc32 check for current and previous image)
+
