@@ -3,6 +3,7 @@
 
 import argparse
 import datetime
+import hashlib
 import os
 import pathlib
 import signal
@@ -56,18 +57,21 @@ def main():
             createTimeLapseVid(args.c, args.d, int(args.f))
         exit()
 
-    if args.s == None or args.s < 3 or args.s > 600:
+    if args.s == None or int(args.s) < 3 or int(args.s) > 600:
         sec = 300
+    else:
+        sec = int(args.s)
 
     if args.d == None:
-        args.d == ""
-
-    pathlib.Path(args.d).mkdir(parents=True, exist_ok=True)
+        args.d = ""
+    else:
+        pathlib.Path(args.d).mkdir(parents=True, exist_ok=True)
 
     while True:
-        fileName = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M.jpg")
+        fileName = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S.jpg")
+        newFile = os.path.join(args.d, fileName)
         try:
-            urllib.request.urlretrieve(args.u, os.path.join(args.d, fileName))
+            urllib.request.urlretrieve(args.u, newFile)
         except:
             print("Error while retreiving URL. Next try in ", sec," seconds.")
         sleep(sec)
