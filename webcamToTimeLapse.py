@@ -33,7 +33,7 @@ PARSER.add_argument("-s", metavar="SLEEP TIMER", type=str, required=False,
                     help="refresh time in seconds, for example: '-s 30'. If none set, 5min will be used. Min: 3sec, max: 600sec")
 PARSER.add_argument("-f", metavar="FPS", type=str, required=False,
                     help="how many fps for the output video, for example: '-f 25'. If none set, fps will be 10. Min: 1, max: 60")
-PARSER.add_argument("-c", metavar="FRAMERATE", type=str, required=False,
+PARSER.add_argument("-c", metavar="CREATE", type=str, required=False,
                     help="usage: -c ./folderwithimages/ . Create timelapse from all images in folder. Will be also merged on interrupt CTRL-C")
 PARSER.add_argument('-d', metavar='DIRECTORY', type=str, required=False,
                     help="set destination directory, default is current directory of this .py file")
