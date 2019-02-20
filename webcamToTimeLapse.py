@@ -113,8 +113,9 @@ def checkIfDoubleFile(currentFile, prevFile):
     cfmd5 = hashlib.md5(open(currentFile, "rb").read()).hexdigest()
     pfmd5 = hashlib.md5(open(prevFile, "rb").read()).hexdigest()
     if (cfmd5 == pfmd5):
-        print("File ", prevFile, " with sme hash as ", currentFile," already exists and will not be saved.")
-    return 0
+        print("File ", prevFile, " with same hash as ", currentFile," already exists and will not be saved.")
+        return 0
+    return 1
 
 if __name__ == "__main__":
     main()
