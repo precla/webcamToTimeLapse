@@ -72,14 +72,15 @@ def main():
     while True:
         fileName = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S.jpg")
         newFile = os.path.join(args.d, fileName)
+        fpath = ""
         try:
-            urllib.request.urlretrieve(args.u, newFile)
+            fpath = urllib.request.urlretrieve(args.u, newFile)
         except:
             print("Error while retreiving URL. Next try in ", sec," seconds.")
 
-        if (checkIfDoubleFile(newFile, prevFile) == 0):
+        if (fpath is not None and checkIfDoubleFile(newFile, prevFile) == 0):
             os.remove(prevFile)
-        prevFile = newFile
+            prevFile = newFile
 
         sleep(sec)
     
