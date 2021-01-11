@@ -13,6 +13,9 @@
     - -c create video of all images in specific directory, example: -c /home/user/images/
     - -d destination folder for the video, example: -d ./output/
 
+## Example:
+- https://www.youtube.com/watch?v=UHR2p3lZXqo
+
 ## TODO:
 - add png support?
 - fix, yet unknown, bugs
